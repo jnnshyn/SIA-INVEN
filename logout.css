@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 350px;
+    text-align: center;
+}
+
+.icon-container {
+    margin-bottom: 15px;
+}
+
+.logout-icon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain; /* Ensures the icon maintains its aspect ratio */
+    color: #ff4444;
+}
+
+.modal-content {
+    margin-bottom: 20px;
+}
+
+.modal-content p {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #0F324E;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 30px;
+    border: 2px solid #0B4082;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #0F324E;
+    width: 130px;
+    height: 30px;
+    margin-top: 20px;
+}
+
+.btn-yes {
+    background: linear-gradient(to bottom, #6AB56A, #4CAF50);
+}
+
+.btn-no {
+    background: linear-gradient(to bottom, #F12323, #cc0000);
+}
+
+.btn:hover {
+    opacity: 0.9;
+}

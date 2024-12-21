@@ -1,0 +1,1019 @@
+
+        .nav-item i {
+            margin-right: 10px; 
+        }
+    
+        .user-actions i {
+            margin-right: 10px; 
+        }
+    
+        .logout i {
+            margin-right: 10px;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+    
+        /* Sidebar Styles */
+        .sidebar {
+        width: 230px;
+        height: calc(100vh - 40px); 
+        background: #6FAFC4; /* Fallback */
+        background: linear-gradient(180deg, #6FAFC4, #2E6878);
+        color: white;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        margin-top: 20px; 
+        margin-bottom: 20px;
+        margin-left: 10px;
+        border-radius: 20px;
+       
+        }
+
+
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+            margin-top: 20px; 
+        }
+        
+        .logo img {
+            width: 200px;
+            height: auto; 
+            margin-bottom: 40px;
+            padding-bottom: 10px;
+        }
+        
+       nav {
+            flex-grow: 1;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .icon {
+            margin-right: 12px;
+        }
+        
+        .logout {
+            margin-top: auto;
+        }
+        
+        .main-content {
+        flex: 1;
+        padding: 20px;
+        background-color: white; 
+        }
+        /* Header Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* SEARCH */
+        .search-bar {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-bar .search-text {
+            width: 300px;
+            padding: 8px 16px;
+            border: 1px solid #0f0f0f;
+            border-radius: 20px;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.5s ease-in-out, border 0.3s ease-in-out;
+        }
+
+        .search-bar .search-text:focus,
+        .search-bar .search-text:hover {
+            border: 1px solid #4A90E2;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-bar button {
+            padding: 8px 20px;
+            background-color: #538196;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            margin-top: 15px;
+            transition: background-color 0.3s ease, transform 0.2s ease; 
+        }
+
+        .search-bar button:hover {
+            background-color: #416a7a; 
+        }
+        .search-bar button:focus {
+            outline: none; 
+            box-shadow: 0 0 5px #538196; /
+        }
+
+        /*Notif*/
+        .user-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+            margin-top:15px;
+            position: relative; 
+        }
+        
+        .user-actions i {
+            font-size: 24px; 
+            margin-right: 10px; 
+            cursor: pointer;
+        }
+
+        /* Modal Styles */
+        .notifmodal {
+        display: none; 
+        position: absolute;
+        margin-top:150px;
+        right: 105%;
+        transform: translateY(-50%);
+        background: linear-gradient(135deg, #2E6878, #55C0DE);  border-radius: 10px;
+        width: 400px;
+        height: 300px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        overflow: hidden;
+        }
+        .notifmodal-content {
+        background-color: #F2F4F7;
+        padding: 10px;
+        border-radius: 10px;
+        color: #333;
+        height: 200px; 
+        overflow-y: auto; 
+        }
+
+        h3 {
+        font-size: 20px;
+        color: #fcfcfc;
+        margin-bottom: 10px;
+        }
+
+        .notifications-list {
+        list-style-type: none;
+        padding-left: 0;
+        margin-bottom: 10px;
+        }
+
+        .notifications-list li {
+        margin: 10px 0;
+        font-size: 14px;
+        }
+
+        /* Clear Button Styles */
+        .clear-btn {
+        position: absolute; 
+        bottom: 2px; 
+        right: 20px;
+        background-color: #d33e3e;
+        color: white;
+        border: none;
+        padding: 10px 20px; 
+        border-radius: 20px; 
+        cursor: pointer;
+        font-size: 12px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .clear-btn:hover {
+        background-color: #A03F3F;
+        transform: scale(1.05); 
+        }
+
+           /* content */
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            background-color: #C8D3DB; 
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 5px; 
+            margin-left: 1px; 
+            height: 562px;
+        }
+        .inventory-content{
+            display: flex;
+            gap: 20px;
+            width: 100%;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #000000;
+            text-align: center;
+            padding: 10px;
+        }
+        td{
+            background-color: #ffffff;
+        }
+        th {
+            background-color: #2E6878;
+            color: white;
+            font-weight: bold;
+        }
+
+             /* LOGOUT */
+        .LogOutmodal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logoutmodal-content {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            width: 35%;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid #ddd;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .modal-header i {
+            font-size: 2rem;
+            color: #dc3545;
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .logoutP {
+            font-size: 1.2rem;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            transform: scale(1.05);
+        }
+        /* New Container Styles */
+.new-container {
+  background-color: #C8D3DB;
+  height: 570px;
+  margin-top: 20px;
+  border-radius: 8px;
+  padding: 15px;
+}
+
+.recent-deliveries {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  height: 395px;
+  margin-top: 20px;
+}
+
+.recent-deliveries h3 {
+  margin-bottom: 20px;
+  font-size: 16px;
+  text-align: center;
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+}
+
+th {
+  background-color: #2E6878;
+  color: white;
+  text-align: center;
+  padding: 12px;
+  border: 1px solid #000000;
+}
+
+tbody {
+  background-color: #C8D3DB;
+}
+
+td {
+  padding: 12px;
+  border: 1px solid #000000;
+  text-align: center;
+}
+
+tr {
+  padding: 12px;
+  border-bottom: 1px solid #C8D3DB;
+}
+
+.status {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.pending {
+  background-color: #FF7F50;
+  color: white;
+}
+
+.issue {
+  background-color: #DC3545;
+  color: white;
+}
+
+.confirmed {
+  background-color: #2E8B57;
+  color: white;
+}
+
+button {
+  padding: 8px 15px;
+  background-color: #1197DA;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1f4e5f;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .dashboard-content {
+      flex-direction: column;
+  }
+
+  .left-column,
+  .right-column {
+      width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+      flex-direction: column;
+  }
+
+  .sidebar {
+      width: 100%;
+  }
+
+  .status-cards {
+      flex-direction: column;
+  }
+
+  .search-bar input {
+      width: 200px;
+      margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    width: 100%;
+  }
+
+  .search-bar input {
+    width: 100%;
+  }
+}
+
+/* Stock Available*/
+.stock_modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* On top of other content */
+  left: 0;
+  top: 1px;
+  width: 110%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgba(0, 0, 0, 0.4); /* Dark background with transparency */
+}
+
+.stock_modal-content {
+  background-color: #fefefe;
+  margin: 10% auto; /* Center the modal vertically and horizontally */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Better responsiveness */
+  max-width: 500px; /* Ensure it doesn't get too large */
+  height:  300px;
+  border-radius: 8px;
+  position: relative;
+}
+
+.stock_modal-header {
+  display: flex;
+  justify-content: center; /* Center the title */
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.stock_modal-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center; /* Ensure the title is centered */
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.stock_close {
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: red; /* Ensure it's visible */
+}
+
+.stock_modal-section {
+  margin-bottom: 20px;
+}
+
+.stock_modal-section h3 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.stock_details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  text-align: left;
+}
+
+.stock_details-group {
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.stock_details-group label {
+  font-size: 16px;
+  font-weight: bold;
+  display: block;
+  margin-right: 10px;
+           
+
+}
+.stock_modal-message{
+  margin-bottom: 20px;
+  font-size: 16px;
+
+}
+/* Align Item details in one row */
+.stock_item-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* Create 3 equal columns */
+  gap: 10px; /* Space between columns */
+  text-align: left;
+}
+
+.stock_item-details-grid div {
+  display: flex;
+  flex-direction: column; /* Stack label above value */
+  margin-bottom: 10px;
+}
+
+.stock_item-details-grid label {
+  margin-bottom: 5px; /* Space between label and value */
+}
+
+/* Adjust space between button and items */
+.stock_check-stock-btn {
+  width: 200px;
+  padding: 10px;
+  background-color: #2F6B6C;
+  margin-left: auto;  /* Center align the button */
+  margin-right: auto; /* Center align the button */
+  display: block; /* Make the button block-level to apply centering */
+  margin-top: 20px; /* Add top margin for more space */
+  margin-bottom: 20px; /* Add bottom margin for separation */
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease; /* Smooth color change */
+}
+
+.stock_check-stock-btn:hover {
+  background-color: #265758;
+}
+
+.stock_fulfill-btn {
+  background-color: #08630B;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+  margin-left: 160px;
+  transition: background-color 0.3s ease; /* Smooth color change */
+}
+
+.stock_fulfill-btn:hover {
+  background-color: #006700;
+}
+
+
+/* Item Unavailable Modal */
+.stock_unavailable {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* On top of other content */
+  left: 0;
+  top: 1px;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgba(0, 0, 0, 0.4); /* Dark background with transparency */
+}
+
+.stock_unavailable .stock_modal-content {
+  background-color: #fefefe;
+  margin: 10% auto; /* Center the modal vertically and horizontally */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Better responsiveness */
+  max-width: 500px; /* Ensure it doesn't get too large */
+  height: 300px;
+  border-radius: 8px;
+  position: relative;
+}
+
+.stock_unavailable .stock_modal-header {
+  display: flex;
+  justify-content: center; /* Center the title */
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.stock_unavailable .stock_modal-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center; /* Ensure the title is centered */
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.stock_unavailable .stock_close {
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: red; /* Close button color */
+}
+
+.stock_unavailable .stock_modal-message {
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+/* Align Item details in one row for unavailable modal */
+.stock_unavailable .stock_details-group {
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.stock_unavailable .stock_details-group label {
+  font-size: 16px;
+  font-weight: bold;
+  display: block;
+  margin-right: 10px;
+}
+
+.stock_unavailable .stock_fulfill-btn {
+  background-color: #08630B; /* Red button */
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+  margin-left: 130px;
+  transition: background-color 0.3s ease; /* Smooth color change */
+}
+
+.stock_unavailable .stock_fulfill-btn:hover {
+  background-color: #006700;/* Darker red on hover */
+}
+
+/* REQUEST INFORMATION MODAL*/
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* On top of other content */
+  left: 0;
+  top: 1px;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgba(0, 0, 0, 0.4); /* Dark background with transparency */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto; /* Center the modal vertically and horizontally */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 600px;
+  height: 400px; /* Increased height to accommodate new layout */
+  border-radius: 8px;
+  position: relative;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: center; /* Center the title */
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center; /* Ensure the title is centered */
+  margin: 0;
+}
+
+.close {
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: red; /* Ensure it's visible */
+}
+
+.modal-section {
+  margin-bottom: 20px;
+}
+
+.modal-section h3 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  text-align: left;
+}
+
+/* Aligning Requestor Information and Item Details to the right */
+.details-group {
+  margin-bottom: 10px;
+}
+
+.details-group label {
+  display: block;
+  margin-bottom: 5px;
+  
+}
+
+/* Align Item details in one row */
+.item-details-grid {
+display: grid;
+grid-template-columns: 1fr 1fr 1fr; /* Create 3 equal columns */
+gap: 10px; /* Space between columns */
+text-align: left;
+}
+
+/* Adjust the layout of each item in grid */
+.item-details-grid div {
+display: flex;
+flex-direction: column; /* Stack label above value */
+margin-bottom: 10px;
+}
+
+.item-details-grid label {
+margin-bottom: 5px; /* Space between label and value */
+}
+/* Adjust space between button and items */
+.check-stock-btn {
+width: 200px;
+padding: 10px;
+background-color: #2F6B6C;
+margin-left: auto;  /* Center align the button */
+margin-right: auto; /* Center align the button */
+display: block; /* Make the button block-level to apply centering */
+margin-top: 60px; /* Add top margin for more space */
+margin-bottom: 20px; /* Add bottom margin for separation */
+color: white;
+border: none;
+border-radius: 20px;
+cursor: pointer;
+font-size: 1em;
+}
+
+.check-stock-btn:hover {
+background-color: #265758;
+}
+.details-group label {
+  margin-top: 5px;
+  display: block;
+  margin-bottom: 5px;
+  font-size: 15px;
+  /* Corrected: Use font-weight for bold text */
+  color: black; /* Set label font color to black */
+}
+.item-details-grid label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 15px;
+  margin-bottom: 5px;
+  /* Corrected: Use font-weight for bold text */
+  color: black; /* Set label font color to black */
+}
+
+  
+
+/* Modal Styles */
+.fa-user {
+  font-size: 24px;
+  cursor: pointer;
+  color: black;
+}
+
+.ProfileModal {
+  display: none; 
+  position: absolute;
+  top: 10%; /* Adjust the top position */
+  right: 55%;
+  background: linear-gradient(135deg, #2E6878, #55C0DE);
+  border-radius: 10px;
+  width: 400px;
+  height: 620px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.Profilemodal-content {
+  position: relative;
+  width: 100%;
+  min-height: 500px; /* Adjustable for responsiveness */
+  background: linear-gradient(135deg, #2E6878, #55C0DE);
+  border-radius: 20px;
+  padding: 20px;
+}
+@media screen and (max-height: 600px) {
+  .ProfileModal {
+      height: auto;
+      margin-top: 50px;
+      transform: none;
+  }
+  .Profilemodal-content {
+      min-height: 400px;
+  }
+}
+
+
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  color: red;
+  font-size: 20px;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  color: white;
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.profile-pic {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 20px;
+  position: relative;
+}
+
+.profile-pic img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid white;
+  object-fit: cover;
+}
+
+.edit-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.edit-icon label {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.edit-icon i {
+  color: #2B6777;
+  font-size: 12px;
+}
+
+.info-card {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 15px;
+}
+
+section {
+  margin-bottom: 20px;
+}
+
+section:last-child {
+  margin-bottom: 0;
+}
+
+h2 {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.field {
+  margin-bottom: 15px;
+}
+
+.field:last-child {
+  margin-bottom: 0;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.value-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.value-container span {
+  color: #333;
+  font-size: 14px;
+}
+
+.edits-btn {
+  background: none;
+  border: none;
+  color: #4CAF50;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+}
+
+.save-btn {
+  width: 70%;
+  padding: 12px;
+  background: #19501b;
+  color: white;
+  border: none;
+  border-radius: 35px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 50px;
+  margin-top: 10px;
+}
+
+.edit-input {
+  flex: 1;
+  margin-right: 10px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.hidden {
+  display: none;
+}
+ 

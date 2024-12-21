@@ -1,0 +1,318 @@
+<!-- Gerr Motor Parts Dashboard HTML -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="dashStyle.css">
+    
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="sia_logo.png" alt="Gerr Motor Parts Logo">
+            </div>
+            <nav>
+                <a href="dashboard.html" class="nav-item active"><i class="fa-solid fa-home"></i> Dashboard</a>
+                <a href="Requests.html" class="nav-item"><i class="fa-solid fa-file-alt"></i> Request</a>
+                <a href="StockM.html" class="nav-item"><i class="fa-solid fa-box"></i> Stock Management</a>
+                <a href="delivery.html" class="nav-item"><i class="fa-solid fa-truck"></i> Delivery Management</a>
+                <a href="history.html" class="nav-item"><i class="fa-solid fa-clock-rotate-left"></i> History</a>            
+            </nav>
+            <!-- Logout Confirmation Modal -->
+            <div class="LogOutmodal" id="logoutModal">
+                <div class="logoutmodal-content">
+                    <div class="modal-header">
+                        <i class="fa-solid fa-sign-out-alt"></i> 
+                        <h3>Log Out</h3>
+                    </div>
+                    <p class="logoutP">Are you sure you want to log out?</p>
+                    <div class="modal-buttons">
+                        <button class="btn btn-danger" id="confirmLogout">Yes, Log Out</button>
+                        <button class="btn btn-secondary" id="cancelLogout">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="#" class="nav-item logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </aside>
+        <main class="main-content">
+            <header>
+                <div class="search-bar">
+                    <input class="search-text" type="text" placeholder="Search...">
+                    <button>Search</button>
+                </div>
+               <div class="user-actions">
+                <i class="fa-solid fa-bell" onclick="toggleModal()"></i>
+                <div id="notificationModal" class="modal">
+                  <h3>NOTIFICATION (2)</h3>
+                  <div class="modal-content">
+                    <ul class="notifications-list">
+                      <li></li>
+                    </ul>
+                  </div>
+                  <button class="clear-btn" onclick="clearNotifications()">Clear All</button>
+                </div>
+                <i class="fa-solid fa-user" onclick="toggleUserModal()"></i>
+
+                <div id="ProfileModal" class="ProfileModal">
+                    <div class="Profilemodal-content">
+                        <div class="close-btn" onclick="toggleUserModal()">
+                            <i class="fas fa-times"></i>
+                        </div>
+                        <h1>PROFILE</h1>
+                        <div class="profile-pic">
+                            <img id="profileImage" src="https://placekitten.com/100/100" alt="Profile">
+                            <div class="edit-icon">
+                                <label for="imageUpload">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </label>
+                                <input type="file" id="imageUpload" accept="image/*" onchange="updateProfilePic(event)" style="display: none;">
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <section>
+                                <h2>Personal Information</h2>
+                                <div class="field">
+                                    <label>Name</label>
+                                    <div class="value-container">
+                                        <span></span>
+                                        <button class="edit-btn">Edit</button>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label>Email Address</label>
+                                    <div class="value-container">
+                                        <span></span>
+                                        <button class="edit-btn">Edit</button>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <h2>Account Details</h2>
+                                <div class="field">
+                                    <label>Username</label>
+                                    <div class="value-container">
+                                        <span></span>
+                                        <button class="edit-btn">Edit</button>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <h2>Security</h2>
+                                <div class="field">
+                                    <label>Password</label>
+                                    <div class="value-container">
+                                        <span></span>
+                                        <button class="edit-btn">Edit</button>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <button class="save-btn">Save All Changes</button>
+                    </div>
+                </div> 
+            </header>
+            <div class="wrapper">   
+                <div class="dashboard-content">
+                    <div class="left-column">
+                        <div class="status-cards">
+                            <div class="card">
+                                <div class="indicator green"></div>
+                                <p>In Stock</p>
+                            </div>
+                            <div class="card">
+                                <div class="indicator orange"></div>
+                                <p>Running out of Stock</p>
+                            </div>
+                            <div class="card">
+                                <div class="indicator red"></div>
+                                <p>Out of Stock</p>
+                            </div>
+                           
+                        </div>
+                        <!-- RECENTLY DELIVERED ITEMS -->
+                        <div class="recent-deliveries-card">
+                            <div class="recent-deliveries">
+                                <h3 style="color: black;">RECENTLY DELIVERED ITEMS</h3>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                        <th>Delivery ID</th>
+                                        <th>Item Name</th>
+                                        <th>Supplier Name</th>
+                                        <th>Delivery Date</th>
+                                        <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><span></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-column">
+                        <div class="requisition-requests">
+                            <h3 style="color: black;">RECENTLY REQUISITION REQUESTS</h3>
+                            <div class="request">
+                                <div class="request-header">
+                                    <span>Requisition ID: </span>
+                                </div>
+                                <div class="request-body">
+                                    <span></span>
+                                    <a href="requests.html" class="view-btn">View</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>                   
+        </main>
+    </div>
+    <script>
+    
+    function toggleModal() {
+        const modal = document.getElementById('notificationModal');
+        modal.classList.toggle('show');
+    }
+
+    function clearNotifications() {
+        const notificationsList = document.querySelector('.notifications-list');
+        notificationsList.innerHTML = ''; 
+        alert('Notifications cleared!');
+    }
+
+    //LOGOUT
+    document.addEventListener('DOMContentLoaded', () => {
+        const logoutLink = document.querySelector('.logout');
+        const logoutModal = document.getElementById('logoutModal');
+        const confirmLogout = document.getElementById('confirmLogout');
+        const cancelLogout = document.getElementById('cancelLogout');
+
+        logoutLink.addEventListener('click', (e) => {
+            e.preventDefault(); 
+            logoutModal.style.display = 'flex';
+        });
+
+        confirmLogout.addEventListener('click', () => {
+            window.location.href = 'http://127.0.0.1:8080/LOGIN/login.html'; 
+        });
+
+        cancelLogout.addEventListener('click', () => {
+            hideLogoutModal();
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === logoutModal) {
+                hideLogoutModal();
+            }
+        });
+
+        function hideLogoutModal() {
+            logoutModal.style.display = 'none';
+        }
+    });
+
+                // Update profile picture
+                function toggleUserModal() {
+                    const modal = document.querySelector('#ProfileModal');
+                    modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
+                }
+
+            function updateProfilePic(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('profileImage').src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            // Close modal when clicking outside
+            window.onclick = function(event) {
+                const modal = document.getElementById('ProfileModal');
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            }
+
+            // Handle edit buttons
+            document.querySelectorAll('.edit-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const container = this.parentElement;
+                    const span = container.querySelector('span');
+                    const currentValue = span.textContent;
+
+                    if (!container.querySelector('.edit-input')) {
+                        // Create input
+                        const input = document.createElement('input');
+                        input.type = span.textContent.includes('•') ? 'password' : 'text';
+                        input.className = 'edit-input';
+                        input.value = span.textContent.includes('•') ? '' : currentValue;
+                        
+                        // Hide span and insert input
+                        span.style.display = 'none';
+                        container.insertBefore(input, this);
+                        
+                        // Change edit to save
+                        this.textContent = 'Save';
+                        
+                        input.focus();
+                    } else {
+                        // Save changes
+                        const input = container.querySelector('.edit-input');
+                        const newValue = input.value;
+                        
+                        // Update span and show it
+                        span.textContent = input.type === 'password' && newValue ? '••••••••' : (newValue || span.textContent);
+                        span.style.display = 'inline';
+                        
+                        // Remove input
+                        input.remove();
+                        
+                        // Change save back to edit
+                        this.textContent = 'Edit';
+                    }
+                });
+            });
+
+            // Save all changes
+            document.querySelector('.save-btn').addEventListener('click', function() {
+                const data = {
+                    profileImage: document.getElementById('profileImage').src,
+                    name: document.querySelector('div.field:nth-child(1) span').textContent,
+                    email: document.querySelector('div.field:nth-child(2) span').textContent,
+                    username: document.querySelector('section:nth-child(2) span').textContent
+                };
+                
+                console.log('Saving:', data);
+                alert('Changes saved successfully!');
+            });
+
+            // Close with Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    document.getElementById('ProfileModal').style.display = 'none';
+                }
+            });
+                
+
+    </script>
+</body>
+</html>

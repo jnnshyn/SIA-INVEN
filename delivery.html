@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerr Motor Parts Dashboard</title>
+    <!-- Link to Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="delivery.css">
+    <style>
+      
+
+        /* Styling for the upload section */
+        .upload-section {
+            margin-top: 20px;
+        }
+
+        .upload-btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .upload-btn:hover {
+            background-color: #45a049;
+        }
+
+        .file-input {
+            display: none;
+        }
+                /*Notif*/
+                .user-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+            margin-top:15px;
+            position: relative; 
+            font-size: 24px; 
+            margin-right: 10px; 
+            cursor: pointer;
+        }
+        
+      
+
+
+        /* Modal styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal {
+            background: white;
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .modal-header {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .button-group button {
+            margin-right: 10px;
+        }
+        
+        
+
+        /* Notification Modal styles */
+        #notificationModal {
+            position: absolute;
+        margin-top:150px;
+        right: 105%;
+        transform: translateY(-50%);
+        background: linear-gradient(135deg, #2E6878, #55C0DE);  border-radius: 10px;
+        width: 400px;
+        height: 300px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        overflow: hidden;
+        display: none; /* Ensure the modal is hidden by default */
+
+        }
+        .notification-modal-content {
+        background-color: #F2F4F7;
+        padding: 20px;
+        border-radius: 10px;
+        color: #333;
+        height: 200px;
+        overflow-y: auto; 
+        }
+
+
+        .notifications-list {
+            list-style-type: none;
+        padding-left: 0;
+        margin-bottom: 10px; 
+
+        }
+        h3 {
+        font-size: 20px;
+        color: #fcfcfc;
+        margin-bottom: 10px; 
+        }
+
+
+
+        .notifications-list li {
+            margin: 10px 0;
+        font-size: 14px;
+        }
+        
+
+        .clear-btn {
+            position: absolute; 
+        bottom: 8px; 
+        right: 20px;
+        background-color: #d33e3e;
+        color: white;
+        border: none;
+        padding: 10px 20px; 
+        border-radius: 20px; 
+        cursor: pointer;
+        font-size: 12px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+        transition: background-color 0.3s ease, transform 0.2s ease;
+
+        }
+
+        .clear-btn:hover {
+            background-color: #A03F3F;
+        transform: scale(1.05); 
+
+        
+
+        }
+       
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="C:/Users/shayne/Downloads/SIA(INVENTORY)/sia_logo.png" alt="Gerr Motor Parts Logo">
+            </div>
+            <nav>
+                <a href="dashboard.html" class="nav-item active"><i class="fa-solid fa-home"></i> Dashboard</a>
+                <a href="Requests.html" class="nav-item"><i class="fa-solid fa-file-alt"></i> Request</a>
+                <a href="StockM.html" class="nav-item"><i class="fa-solid fa-box"></i> Stock Management</a>
+                <a href="delivery.html" class="nav-item"><i class="fa-solid fa-truck"></i> Delivery Management</a>
+                <a href="history.html" class="nav-item"><i class="fa-solid fa-clock-rotate-left"></i> History</a>
+            </nav>
+            <!-- Logout Confirmation Modal -->
+            <div class="LogOutmodal" id="logoutModal">
+                <div class="logoutmodal-content">
+                    <div class="modal-header">
+                        <i class="fa-solid fa-sign-out-alt"></i> 
+                        <h3>Log Out</h3>
+                    </div>
+                    <p class="logoutP">Are you sure you want to log out?</p>
+                    <div class="modal-buttons">
+                        <button class="btn btn-danger" id="confirmLogout">Yes, Log Out</button>
+                        <button class="btn btn-secondary" id="cancelLogout">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="#" class="nav-item logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </aside>
+
+        
+        <main class="main-content">
+            <header>
+                <div class="search-bar">
+                    <input class="search-text" type="text" placeholder="Search...">
+                    <button>Search</button>
+                </div>
+                <div class="user-actions">
+                    <i class="fa-solid fa-bell" onclick="toggleModal()"></i>
+                    <div id="notificationModal" class="modal">
+                        <h3>NOTIFICATION (2)</h3>
+                        <div class="notification-modal-content">
+
+                            <ul class="notifications-list">
+                                <li>New Delivery Scheduled</li>
+                                <li>Stock Low on Item X</li>
+                            </ul>
+                        </div>
+                        <button class="clear-btn" onclick="clearNotifications()">Clear All</button>
+                    </div>
+                    <i class="fa-solid fa-user" onclick="toggleUserModal()"></i>
+                    <div id="ProfileModal" class="ProfileModal">
+                        <div class="Profilemodal-content">
+                            <div class="close-btn" onclick="toggleUserModal()">
+                                <i class="fas fa-times"></i>
+                            </div>
+                            <h1>PROFILE</h1>
+                            <div class="profile-pic">
+                                <img id="profileImage" src="https://placekitten.com/100/100" alt="Profile">
+                                <div class="edit-icon">
+                                    <label for="imageUpload">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </label>
+                                    <input type="file" id="imageUpload" accept="image/*" onchange="updateProfilePic(event)" style="display: none;">
+                                </div>
+                            </div>
+    
+                            <div class="info-card">
+                                <section>
+                                    <h2>Personal Information</h2>
+                                    <div class="field">
+                                        <label>Name</label>
+                                        <div class="value-container">
+                                            <span></span>
+                                            <button class="edit-btn">Edit</button>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <label>Email Address</label>
+                                        <div class="value-container">
+                                            <span></span>
+                                            <button class="edit-btn">Edit</button>
+                                        </div>
+                                    </div>
+                                </section>
+    
+                                <section>
+                                    <h2>Account Details</h2>
+                                    <div class="field">
+                                        <label>Username</label>
+                                        <div class="value-container">
+                                            <span></span>
+                                            <button class="edit-btn">Edit</button>
+                                        </div>
+                                    </div>
+                                </section>
+    
+                                <section>
+                                    <h2>Security</h2>
+                                    <div class="field">
+                                        <label>Password</label>
+                                        <div class="value-container">
+                                            <span></span>
+                                            <button class="edit-btn">Edit</button>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+    
+                            <button class="save-btn">Save All Changes</button>
+                        </div>
+                    
+                    </div> 
+                </div>
+            </header>
+
+            <div class="new-container">
+                <h2 class="card-title">DELIVERY CONFIRMATION</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item ID</th>
+                            <th>Date</th>
+                            <th>Quantity</th>
+                            <th>Delivery ID</th>
+                            <th>Supplier</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><span ></span></td>
+                            <td><button class="view-button">View</button></td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+
+    <!-- Modal -->
+    <div id="deliveryconfirmModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">DELIVERY CONFIRMATION</h2>
+            </div>
+            <div class="modal-section">
+                <div class="details-grid">
+                    <div class="info-row">
+                        <strong>Item ID:</strong> <span id="modalItemId"></span>
+                    </div>
+                    <div class="info-row">
+                        <strong>Delivery ID:</strong> <span id="modalDeliveryId"></span>
+                    </div>
+                    <div class="info-row">
+                        <strong>Supplier:</strong> <span id="modalSupplier"></span>
+                    </div>
+                    <div class="info-row">
+                        <strong>Item Description:</strong> <span id="modalItemDescription"></span>
+                    </div>
+                    <div class="info-row">
+                        <strong>Delivery Date:</strong> <span id="modalDeliveryDate"></span>
+                    </div>
+                    <div class="info-row">
+                        <strong>Quantity:</strong> <span id="modalQuantity"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="btn btn-confirm" id="confirmBtn">Confirm</button>
+                <button type="button" class="btn btn-report" id="reportBtn">Report Issue</button>
+                <button type="button" class="btn btn-cancel" id="cancelBtn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Modal (Receiving Memo) -->
+    <div id="receivingMemoModal" class="receiving-memo" style="display: none;">
+        <div class="modal-overlay">
+            <div class="modal">
+                <div class="modal-header">
+                    <h2>RECEIVING MEMO</h2>
+                </div>
+
+                <div class="info-section">
+                    <div class="info-row">
+                        <strong>Receiving Memo ID:</strong> 
+                    </div>
+                    <div class="info-row">
+                        <strong>Date Issued:</strong> 
+                    </div>
+                    <div class="info-row">
+                        <strong>Supplier:</strong> 
+                    </div>
+                    <div class="info-row">
+                        <strong>Received By:</strong> 
+                    </div>
+                    <div class="info-row">
+                        <strong>Status:</strong> <span class="pending">Pending</span>
+                    </div>
+                </div>
+
+                <table class="memo-table">
+                    <thead>
+                        <tr>
+                            <th>Item ID</th>
+                            <th>Item Description</th>
+                            <th>Quantity Received</th>
+                            <th>Unit</th>
+                            <th>Condition</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="verification-section">
+                    <div class="info-row">
+                        <strong>Verified By:</strong> 
+                    </div>
+                    <div class="info-row">
+                        <strong>Verification Date:</strong> 
+                    </div>
+                    <div class="info-row">
+                        <strong>Signature:</strong>
+                        <!-- File upload button -->
+                        <button class="upload-btn" id="uploadBtn">UPLOAD</button>
+                        <input type="file" class="file-input" id="fileInput" accept="image/*">
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-edit" id="editBtn">EDIT</button>
+                    <button class="btn btn-confirm "id=conBtn>CONFIRM</button>
+                    <button class="btn btn-cancel" id="receivingMemoCancelBtn">CANCEL</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <!-- Report Issue Modal -->
+<div id="issueReportModalOverlay" class="issue-report-modal-overlay">
+    <div class="issue-report-modal">
+        <div class="issue-report-modal-content">
+            <h2>REPORT ISSUE</h2>
+            
+            <div class="form-row">
+                <label1>Delivery ID: </label1>
+            </div>
+
+            <div class="form-row">
+                <label1>Item ID: </label1>
+            </div>
+
+            <div class="form-row">
+                <label for="itemDescription">Item Description:</label>
+                <input type="text" id="itemDescription">
+            </div>
+
+            <div class="form-row">
+                <label for="issueType">Issue Type:</label>
+                <input type="text" id="issueType">
+            </div>
+
+            <div class="form-row">
+                <label for="issueDescription">Issue Description:</label>
+                <input type="text" id="issueDescription">
+            </div>
+
+            <div class="form-row">
+                <label for="supportingEvidence">Supporting Evidence:</label>
+                <div class="upload-container">
+                    <button class="uploadpic-btn" onclick="document.getElementById('fileUpload').click()">UPLOAD</button>
+                    <input type="file" id="fileUpload" hidden>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="dateIssued">Date Issued Noticed:</label>
+                <input type="date" id="dateIssued">
+            </div>
+
+            <div class="form-row">
+                <label for="comments">Comments:</label>
+                <textarea id="comments"></textarea>
+            </div>
+
+            <div class="button-container">
+                <button class="submit-btn" onclick="submitReport()">Submit Report</button>
+                <button class="cancel-btn" onclick="closeReportIssueModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deliveryModal = document.getElementById('deliveryconfirmModal');
+        const receivingMemoModal = document.getElementById('receivingMemoModal');
+        const issueReportModal = document.getElementById('issueReportModalOverlay');
+        const viewButtons = document.querySelectorAll('.view-button');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const confirmBtn = document.getElementById('confirmBtn');
+        const reportBtn = document.getElementById('reportBtn');
+        const receivingMemoCancelBtn = document.getElementById('receivingMemoCancelBtn');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const fileInput = document.getElementById('fileInput');
+        const submitReportBtn = document.querySelector('.submit-btn');
+        const cancelReportBtn = document.querySelector('.cancel-btn');
+        const submitconBtn = document.getElementById('conBtn'); // Get the "CONFIRM" button
+        const editBtn = document.getElementById('editBtn'); // The "EDIT" button
+        
+        const inputField = document.getElementById('inputField'); // The input field to be edited
+
+        // Ensure modals are hidden by default
+        deliveryModal.style.display = 'none';
+        receivingMemoModal.style.display = 'none';
+        issueReportModal.style.display = 'none';
+
+        // Handle the "EDIT" button click
+        editBtn.addEventListener('click', function() {
+            if (editBtn.textContent === 'EDIT') {
+                // Enable editing functionality
+                inputField.disabled = false; // Enable the input field for editing
+                editBtn.textContent = 'SAVE'; // Change the button text to "SAVE"
+            } else {
+                // Save changes and close modal (or update fields)
+                inputField.disabled = true; // Disable the input field after saving
+                alert("Changes saved successfully!"); // Show confirmation message
+                closeModal(deliveryModal); // Close the modal
+                editBtn.textContent = 'EDIT'; // Reset the button text to "EDIT"
+            }
+        });
+
+        // Function to close a modal
+        function closeModal(modal) {
+            modal.style.display = 'none';
+        }
+
+        // Function to show a modal
+        function showModal(modal) {
+            modal.style.display = 'flex';
+        }
+
+        // Open the first modal when any "View" button is clicked
+        viewButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                showModal(deliveryModal);
+            });
+        });
+
+        // Open the "Report Issue" modal when "Report Issue" button in the delivery confirmation modal is clicked
+        reportBtn.addEventListener('click', function() {
+            showModal(issueReportModal);
+            closeModal(deliveryModal); // Close the delivery confirmation modal when opening the report issue modal
+        });
+
+        // Close the "Report Issue" modal when cancel is clicked
+        cancelReportBtn.addEventListener('click', function() {
+            closeModal(issueReportModal);
+        });
+
+        // Close the "Delivery Confirmation" modal when cancel is clicked
+        cancelBtn.addEventListener('click', function() {
+            closeModal(deliveryModal);
+        });
+
+        // Submit the issue report
+        submitReportBtn.addEventListener('click', function() {
+            // Here you can handle the logic to submit the report (e.g., form validation, sending data)
+            alert("Report Submitted!");
+            closeModal(issueReportModal); // Close the modal after submission
+        });
+
+        // Handle file upload
+        uploadBtn.addEventListener('click', function() {
+            fileInput.click(); // Trigger file input when upload button is clicked
+        });
+
+        fileInput.addEventListener('change', function() {
+            if (fileInput.files.length > 0) {
+                // Show file name once a file is selected
+                uploadBtn.textContent = fileInput.files[0].name;
+            }
+        });
+
+        // Open the second modal (Receiving Memo) when "Confirm" button is clicked in the delivery modal
+        confirmBtn.addEventListener('click', function() {
+            showModal(receivingMemoModal);
+            closeModal(deliveryModal);
+        });
+
+        // Close the receiving memo modal when the cancel button is clicked
+        receivingMemoCancelBtn.addEventListener('click', function() {
+            closeModal(receivingMemoModal);
+        });
+
+        // Handle the "CONFIRM" button click
+        submitconBtn.addEventListener('click', function() {
+            // Close the current modal
+            closeModal(deliveryModal);
+
+            // Show confirmation message
+            alert("Confirmed successfully!");
+        });
+
+    });
+    // Toggle the modal visibility
+    function toggleModal() {
+        const modal = document.getElementById("notificationModal");
+        const isModalOpen = modal.style.display === "block";
+
+        if (isModalOpen) {
+            modal.style.display = "none";
+            sessionStorage.setItem("modalState", "closed");
+        } else {
+            modal.style.display = "block";
+            sessionStorage.setItem("modalState", "open");
+        }
+    }
+
+    // Check modal state on page load and show it if needed
+    window.onload = function() {
+        const modalState = sessionStorage.getItem("modalState");
+        const modal = document.getElementById("notificationModal");
+
+        if (modalState === "open") {
+            modal.style.display = "block";
+        } else {
+            modal.style.display = "none";
+        }
+    }
+
+    // Clear notifications function
+    function clearNotifications() {
+        const notificationList = document.querySelector(".notifications-list");
+        notificationList.innerHTML = ""; // Clear all notifications
+        sessionStorage.removeItem("modalState"); // Reset modal state if needed
+    }
+
+    //LOGOUT
+    document.addEventListener('DOMContentLoaded', () => {
+        const logoutLink = document.querySelector('.logout');
+        const logoutModal = document.getElementById('logoutModal');
+        const confirmLogout = document.getElementById('confirmLogout');
+        const cancelLogout = document.getElementById('cancelLogout');
+
+        logoutLink.addEventListener('click', (e) => {
+            e.preventDefault(); 
+            logoutModal.style.display = 'flex';
+        });
+
+        confirmLogout.addEventListener('click', () => {
+            window.location.href = 'http://127.0.0.1:8080/LOGIN/login.html'; 
+        });
+
+        cancelLogout.addEventListener('click', () => {
+            hideLogoutModal();
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === logoutModal) {
+                hideLogoutModal();
+            }
+        });
+
+        function hideLogoutModal() {
+            logoutModal.style.display = 'none';
+        }
+    });
+
+    // Update profile picture
+    function toggleUserModal() {
+                    const modal = document.querySelector('#ProfileModal');
+                    modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
+                }
+
+            function updateProfilePic(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('profileImage').src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            // Close modal when clicking outside
+            window.onclick = function(event) {
+                const modal = document.getElementById('ProfileModal');
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            }
+
+            // Handle edit buttons
+            document.querySelectorAll('.edit-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const container = this.parentElement;
+                    const span = container.querySelector('span');
+                    const currentValue = span.textContent;
+
+                    if (!container.querySelector('.edit-input')) {
+                        // Create input
+                        const input = document.createElement('input');
+                        input.type = span.textContent.includes('•') ? 'password' : 'text';
+                        input.className = 'edit-input';
+                        input.value = span.textContent.includes('•') ? '' : currentValue;
+                        
+                        // Hide span and insert input
+                        span.style.display = 'none';
+                        container.insertBefore(input, this);
+                        
+                        // Change edit to save
+                        this.textContent = 'Save';
+                        
+                        input.focus();
+                    } else {
+                        // Save changes
+                        const input = container.querySelector('.edit-input');
+                        const newValue = input.value;
+                        
+                        // Update span and show it
+                        span.textContent = input.type === 'password' && newValue ? '••••••••' : (newValue || span.textContent);
+                        span.style.display = 'inline';
+                        
+                        // Remove input
+                        input.remove();
+                        
+                        // Change save back to edit
+                        this.textContent = 'Edit';
+                    }
+                });
+            });
+
+            // Save all changes
+            document.querySelector('.save-btn').addEventListener('click', function() {
+                const data = {
+                    profileImage: document.getElementById('profileImage').src,
+                    name: document.querySelector('div.field:nth-child(1) span').textContent,
+                    email: document.querySelector('div.field:nth-child(2) span').textContent,
+                    username: document.querySelector('section:nth-child(2) span').textContent
+                };
+                
+                console.log('Saving:', data);
+                alert('Changes saved successfully!');
+            });
+
+            // Close with Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    document.getElementById('ProfileModal').style.display = 'none';
+                }
+            });
+                
+
+
+</script>
+
+
+</body>
+</html>

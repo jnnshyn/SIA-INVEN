@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GERR MOTOR PARTS - Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(180deg, #6FAFC4, #2E6878);
+        }
+
+        .container {
+            width: 80%;
+            height: 340px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            gap: 50px;
+        }
+
+        .logo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            padding: 10px;
+            max-width: 900px;
+        }
+
+        .logo {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .company-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .since {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .login-card {
+            background-color: #f0f0f0;
+            padding: 40px;
+            border-radius: 15px;
+            width: 400px;
+            height: 380px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .login-header {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .login-header h1 {
+            color: #2c7b7b;
+            font-size: 26px;
+            margin-bottom: 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        .login-header p {
+            color: #2c7b7b;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .login-header img {
+            width: 40px;
+            height: 40px;
+            margin-right: 8px;  /* Space between icon and text */
+            margin-left: 25px;
+            
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 25px; /* Increased gap for better spacing */
+            align-items: center;
+            width: 100%;
+        }
+
+        .form-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            margin-bottom: 15px; /* Bottom margin for spacing */
+        }
+
+        .form-group div {
+            height: 55px;
+            width: 300px;
+            border: 2px solid #2c7b7b;
+            border-radius: 20px;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            background-color: transparent;
+        }
+
+        .form-group h3 {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f0f0f0;
+            padding: 0 10px;
+            font-size: 12px;
+            color: #2c7b7b;
+        }
+        
+
+        .login-button {
+            width: 150px;
+            height: 42px;
+            padding: 10px;
+            background-color: #538196;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+            align-self: center;
+        }
+
+        .login-button:hover {
+            background-color: #1a4747;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .login-card {
+                width: 100%;
+                max-width: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-section">
+            <img src="C:/Users/shayne/Downloads/SIA(INVENTORY)/sia_logo.png" alt="Gerr Motor Parts Logo" class="logo">
+        </div>
+        
+        <div class="login-card">
+            <div class="login-header">
+                <h1>
+                    <!-- Replaced icon with image -->
+                    <img src="img/forgotpass.png" alt="Forgot Password Icon">
+                    Forgot Password?
+                </h1>
+                <p>Provide your email address, and we'll help you recover access to your account.</p>
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <div>
+                        <h3>Email Address</h3>
+                        <input type="text" id="EmailAdd" name="username" required>
+                    </div>
+                </div>
+                
+                <a href="OTP.html">
+                    <button type="button" class="login-button">Submit</button>
+                </a>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const EmailAdd = document.getElementById('EmailAdd').value;
+            console.log('Login attempt:', {EmailAdd});
+        });
+    </script>
+</body>
+</html>

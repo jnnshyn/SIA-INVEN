@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerr Motor Parts Dashboard</title>
+    <!-- Link to Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="StockStyle.css">
+    <style>
+                    /*Notif*/
+            .user-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+            margin-top:15px;
+            position: relative; 
+            font-size: 24px; 
+            margin-right: 10px; 
+            cursor: pointer;
+            }
+
+                    /* Notification Modal styles */
+        #notificationModal {
+            position: absolute;
+        margin-top:150px;
+        right: 105%;
+        transform: translateY(-50%);
+        background: linear-gradient(135deg, #2E6878, #55C0DE);  border-radius: 10px;
+        width: 400px;
+        height: 300px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        overflow: hidden;
+        display: none; /* Ensure the modal is hidden by default */
+
+        }
+        .notification-modal-content {
+        background-color: #F2F4F7;
+        padding: 20px;
+        border-radius: 10px;
+        color: #333;
+        height: 200px;
+        overflow-y: auto; 
+        }
+
+
+        .notifications-list {
+            list-style-type: none;
+        padding-left: 0;
+        margin-bottom: 10px; 
+
+        }
+        h3 {
+        font-size: 20px;
+        color: #fcfcfc;
+        margin-bottom: 10px; 
+        }
+
+
+
+        .notifications-list li {
+            margin: 10px 0;
+        font-size: 14px;
+        }
+        
+
+        .clear-btn {
+            position: absolute; 
+        bottom: 8px; 
+        right: 20px;
+        background-color: #d33e3e;
+        color: white;
+        border: none;
+        padding: 10px 20px; 
+        border-radius: 20px; 
+        cursor: pointer;
+        font-size: 12px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+        transition: background-color 0.3s ease, transform 0.2s ease;
+
+        }
+
+        .clear-btn:hover {
+            background-color: #A03F3F;
+        transform: scale(1.05); 
+
+        }
+         /* LOGOUT */
+  .LogOutmodal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.logoutmodal-content {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 35%;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    border: 1px solid #ddd;
+}
+
+.logoutmodal-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.logoutmodal-header i {
+    font-size: 2rem;
+    color: #dc3545;
+}
+
+.logoutmodal-header h3 {
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.logoutP {
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.logoutmodal-buttons{
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    transform: scale(1.05);
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="C:/Users/shayne/Downloads/SIA(INVENTORY)/sia_logo.png" alt="Gerr Motor Parts Logo">
+            </div>
+            <nav>
+                <a href="dashboard.html" class="nav-item active"><i class="fa-solid fa-home"></i> Dashboard</a>
+                <a href="Requests.html" class="nav-item"><i class="fa-solid fa-file-alt"></i> Request</a>
+                <a href="StockM.html" class="nav-item"><i class="fa-solid fa-box"></i> Stock Management</a>
+                <a href="delivery.html" class="nav-item"><i class="fa-solid fa-truck"></i> Delivery Management</a>
+                <a href="history.html" class="nav-item"><i class="fa-solid fa-clock-rotate-left"></i> History</a>
+            </nav>
+               <!-- Logout Confirmation Modal -->
+            <div class="LogOutmodal" id="logoutModal">
+                <div class="logoutmodal-content">
+                    <div class="modal-header">
+                        <i class="fa-solid fa-sign-out-alt"></i> 
+                        <h3>Log Out</h3>
+                    </div>
+                    <p class="logoutP">Are you sure you want to log out?</p>
+                    <div class="modal-buttons">
+                        <button class="btn btn-danger" id="confirmLogout">Yes, Log Out</button>
+                        <button class="btn btn-secondary" id="cancelLogout">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="#" class="nav-item logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </aside>
+
+
+                <main class="main-content">
+                <header>
+                    <div class="search-bar">
+                        <input class="search-text" type="text" placeholder="Search...">
+                        <button>Search</button>
+                    </div>
+                    <div class="user-actions">
+                        <i class="fa-solid fa-bell" onclick="toggleModal()"></i>
+                        <div id="notificationModal" class="modal">
+                            <h3>NOTIFICATION ()</h3>
+                            <div class="notification-modal-content">
+
+                                <ul class="notifications-list">
+                                    <li></li>
+                                    <li></li>
+                                </ul>
+                            </div>
+                            <button class="clear-btn" onclick="clearNotifications()">Clear All</button>
+                        </div>
+
+                        <!--Profile Icon Trigger-->
+                <i class="fa-solid fa-user" onclick="toggleUserModal()"></i>
+                <div id="ProfileModal" class="ProfileModal">
+                    <div class="Profilemodal-content">
+                        <div class="close-btn" onclick="toggleUserModal()">
+                            <i class="fas fa-times"></i>
+                        </div>
+                        <h1>PROFILE</h1>
+                        <div class="profile-pic">
+                            <img id="profileImage" src="https://placekitten.com/100/100" alt="Profile">
+                            <div class="edit-icon">
+                                <label for="imageUpload">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </label>
+                                <input type="file" id="imageUpload" accept="image/*" onchange="updateProfilePic(event)" style="display: none;">
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <section>
+                                <h2>Personal Information</h2>
+                                <div class="field">
+                                    <label>Name</label>
+                                    <div class="value-container">
+                                        <span></span>
+                                        <button class="edits-btn">Edit</button>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label>Email Address</label>
+                                    <div class="value-container">
+                                        <span></span>
+                                        <button class="edits-btn">Edit</button>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <h2>Account Details</h2>
+                                <div class="field">
+                                    <label>Username</label>
+                                    <div class="value-container">
+                                        <span></span>
+                                        <button class="edits-btn">Edit</button>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <h2>Security</h2>
+                                <div class="field">
+                                    <label>Password</label>
+                                    <div class="value-container">
+                                        <span></span>
+                                        <button class="edits-btn">Edit</button>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <button class="save-btn">Save All Changes</button>
+                    </div>
+                
+                </div> 
+          </div>     
+        </header>
+
+              
+                    
+
+
+            <div class="new-container">
+                <div class="stock-management">
+                    <div class="toolbar">
+                        <select class="filter-dropdown">
+                            <option value="">Filter by</option>
+                            <option value="category">Engine Components</option>
+                            <option value="stock">Transmission Components</option>
+                            <option value="price">Electrical Components</option>
+                            <option value="price">Brake Components</option>
+                            <option value="price">Chassis Components</option>
+                            <option value="price">Engine Oils</option>
+                        </select>
+                        <button class="add-item-btn">
+                            <i class="fa fa-plus"></i> Add Item
+                        </button>
+                    </div>
+                    <table class="stock-table">
+                        <thead>
+                            <tr>
+                                <th>Stock ID</th>
+                                <th>Item Name</th>
+                                <th>Category</th>
+                                <th>Description</th>
+                                <th>Stock Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Reorder Level</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="edit-btn">
+                                            <i class="fa fa-edit"></i> Edit
+                                        </button>
+                                        <button class="delete-btn">
+                                            <i class="fa fa-trash"></i> Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for Adding Item -->
+    <div class="modal-overlay">
+        <div class="modal">
+            <button class="close-button">×</button>
+            <div class="modal-header">ADD NEW ITEM</div>
+
+            <form id="addItemForm">
+                <div class="form-group">
+                    <label for="itemName">Item Name</label>
+                    <input type="text" id="itemName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" required>
+                        <option value="">Select Category</option>
+                        <option value="lubricants">Lubricants</option>
+                        <option value="filters">Filters</option>
+                        <option value="brakes">Brakes</option>
+                        <option value="engine">Engine Parts</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="quantity">Quantity</label>
+                        <input type="number" id="quantity" required min="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="unitPrice">Unit Price</label>
+                        <input type="number" id="unitPrice" required min="0" step="0.01">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="unitOfMeasure">Unit of Measure</label>
+                    <select id="unitOfMeasure" required>
+                        <option value="">Select Unit</option>
+                        <option value="piece">Piece</option>
+                        <option value="liter">Liter</option>
+                        <option value="kilogram">Kilogram</option>
+                        <option value="set">Set</option>
+                    </select>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="add-button">Add</button>
+                    <button type="button" class="cancel-button">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for Modal Toggle
+        const addItemButton = document.querySelector('.add-item-btn');
+        const modalOverlay = document.querySelector('.modal-overlay');
+        const closeButton = document.querySelector('.close-button');
+        const cancelButton = document.querySelector('.cancel-btn');
+
+        // Show modal when Add Item button is clicked
+        addItemButton.addEventListener('click', () => {
+            modalOverlay.style.display = 'flex';  // Make the modal visible
+        });
+
+        // Hide modal when Close button is clicked
+        closeButton.addEventListener('click', () => {
+            modalOverlay.style.display = 'none';  // Hide the modal
+        });
+
+        // Hide modal when Cancel button is clicked
+        cancelButton.addEventListener('click', () => {
+            modalOverlay.style.display = 'none';  // Hide the modal
+        });
+
+        // Close modal when clicking outside of it
+        window.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                modalOverlay.style.display = 'none';  // Hide the modal
+            }
+        });
+
+        // Toggle the notification modal visibility
+        function toggleModal() {
+            const modal = document.getElementById("notificationModal");
+            const isModalOpen = modal.style.display === "block";
+
+            if (isModalOpen) {
+                modal.style.display = "none";
+                sessionStorage.setItem("modalState", "closed");
+            } else {
+                modal.style.display = "block";
+                sessionStorage.setItem("modalState", "open");
+            }
+        }
+
+        // Check modal state on page load and show it if needed
+        window.onload = function () {
+            const modalState = sessionStorage.getItem("modalState");
+            const modal = document.getElementById("notificationModal");
+
+            if (modalState === "open") {
+                modal.style.display = "block";
+            } else {
+                modal.style.display = "none";
+            }
+        }
+
+        // Clear notifications function
+        function clearNotifications() {
+            const notificationList = document.querySelector(".notifications-list");
+            notificationList.innerHTML = ""; // Clear all notifications
+            sessionStorage.removeItem("modalState"); // Reset modal state if needed
+        }
+
+       // Show logout modal when logout link is clicked
+    logoutButton.addEventListener('click', (e) => {
+        e.preventDefault();  // Prevent the default logout action
+        logoutModal.style.display = 'flex';  // Show the logout confirmation modal
+    });
+
+     // JavaScript for Logout Modal
+document.addEventListener("DOMContentLoaded", () => {
+    const logoutLink = document.querySelector(".logout");
+    const logoutModal = document.getElementById("logoutModal");
+    const confirmLogoutBtn = document.getElementById("confirmLogout");
+    const cancelLogoutBtn = document.getElementById("cancelLogout");
+
+    // Show the logout modal when the logout link is clicked
+    logoutLink.addEventListener("click", (event) => {
+        event.preventDefault(); // Prevent default link behavior
+        logoutModal.style.display = "flex"; // Show the modal
+    });
+
+    // Handle "Yes, Log Out" button
+    confirmLogoutBtn.addEventListener("click", () => {
+        // Redirect to the logout action or login page
+        window.location.href = "login.html"; // Replace with your logout URL or logic
+    });
+
+    // Handle "Cancel" button
+    cancelLogoutBtn.addEventListener("click", () => {
+        logoutModal.style.display = "none"; // Hide the modal
+    });
+});
+
+ // Update profile picture
+ function toggleUserModal() {
+                    const modal = document.querySelector('#ProfileModal');
+                    modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
+                }
+
+            function updateProfilePic(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('profileImage').src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            // Close modal when clicking outside
+            window.onclick = function(event) {
+                const modal = document.getElementById('ProfileModal');
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            }
+
+            // Handle edit buttons
+            document.querySelectorAll('.edit-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const container = this.parentElement;
+                    const span = container.querySelector('span');
+                    const currentValue = span.textContent;
+
+                    if (!container.querySelector('.edit-input')) {
+                        // Create input
+                        const input = document.createElement('input');
+                        input.type = span.textContent.includes('•') ? 'password' : 'text';
+                        input.className = 'edit-input';
+                        input.value = span.textContent.includes('•') ? '' : currentValue;
+                        
+                        // Hide span and insert input
+                        span.style.display = 'none';
+                        container.insertBefore(input, this);
+                        
+                        // Change edit to save
+                        this.textContent = 'Save';
+                        
+                        input.focus();
+                    } else {
+                        // Save changes
+                        const input = container.querySelector('.edit-input');
+                        const newValue = input.value;
+                        
+                        // Update span and show it
+                        span.textContent = input.type === 'password' && newValue ? '••••••••' : (newValue || span.textContent);
+                        span.style.display = 'inline';
+                        
+                        // Remove input
+                        input.remove();
+                        
+                        // Change save back to edit
+                        this.textContent = 'Edit';
+                    }
+                });
+            });
+
+            // Save all changes
+            document.querySelector('.save-btn').addEventListener('click', function() {
+                const data = {
+                    profileImage: document.getElementById('profileImage').src,
+                    name: document.querySelector('div.field:nth-child(1) span').textContent,
+                    email: document.querySelector('div.field:nth-child(2) span').textContent,
+                    username: document.querySelector('section:nth-child(2) span').textContent
+                };
+                
+                console.log('Saving:', data);
+                alert('Changes saved successfully!');
+            });
+
+            // Close with Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    document.getElementById('ProfileModal').style.display = 'none';
+                }
+            });
+    </script>
+</body>
+
+</html>

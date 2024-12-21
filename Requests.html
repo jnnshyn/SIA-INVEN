@@ -1,0 +1,461 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="Rstyles.css">
+    
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="sia_logo.png" alt="Gerr Motor Parts Logo">
+            </div>
+            <nav>
+                <a href="dashboard.html" class="nav-item active"><i class="fa-solid fa-home"></i> Dashboard</a>
+                <a href="Requests.html" class="nav-item"><i class="fa-solid fa-file-alt"></i> Request</a>
+                <a href="StockM.html" class="nav-item"><i class="fa-solid fa-box"></i> Stock Management</a>
+                <a href="delivery.html" class="nav-item"><i class="fa-solid fa-truck"></i> Delivery Management</a>
+                <a href="history.html" class="nav-item"><i class="fa-solid fa-clock-rotate-left"></i> History</a>
+            </nav>
+            <!-- Logout Confirmation Modal -->
+            <div class="LogOutmodal" id="logoutModal">
+                <div class="logoutmodal-content">
+                    <div class="modal-header">
+                        <i class="fa-solid fa-sign-out-alt"></i> 
+                        <h3>Log Out</h3>
+                    </div>
+                    <p class="logoutP">Are you sure you want to log out?</p>
+                    <div class="modal-buttons">
+                        <button class="btn btn-danger" id="confirmLogout">Yes, Log Out</button>
+                        <button class="btn btn-secondary" id="cancelLogout">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <a href="#" class="nav-item logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </aside>
+        <main class="main-content">
+            <header>
+                <div class="search-bar">
+                    <input class = "search-text" type="text" placeholder="Search...">
+                    <button>Search</button>
+                </div>
+               <!-- Bell Icon Trigger -->
+               <div class="user-actions">
+                <i class="fa-solid fa-bell" onclick="toggleModal()"></i>
+                <div id="notificationModal" class="notifmodal">
+                  <h3>NOTIFICATION (2)</h3>
+                  <div class="notifmodal-content">
+                    <ul class="notifications-list">
+                      <li>(12-11-2024): Purchased item</li>
+                      <li>(21-10-2024): Product ‘Castrol Active’ is out of stock.</li>
+                    </ul>
+                  </div>
+                  <button class="clear-btn" onclick="clearNotifications()">Clear All</button>
+                </div>
+                <i class="fa-solid fa-user" onclick="toggleUserModal()"></i>
+                    <div id="ProfileModal" class="ProfileModal">
+                        <div class="Profilemodal-content">
+                            <div class="close-btn" onclick="toggleUserModal()">
+                                <i class="fas fa-times"></i>
+                            </div>
+                            <h1>PROFILE</h1>
+                            <div class="profile-pic">
+                                <img id="profileImage" src="https://placekitten.com/100/100" alt="Profile">
+                                <div class="edit-icon">
+                                    <label for="imageUpload">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </label>
+                                    <input type="file" id="imageUpload" accept="image/*" onchange="updateProfilePic(event)" style="display: none;">
+                                </div>
+                            </div>
+    
+                            <div class="info-card">
+                                <section>
+                                    <h2>Personal Information</h2>
+                                    <div class="field">
+                                        <label>Name</label>
+                                        <div class="value-container">
+                                            <span></span>
+                                            <button class="edits-btn">Edit</button>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <label>Email Address</label>
+                                        <div class="value-container">
+                                            <span></span>
+                                            <button class="edits-btn">Edit</button>
+                                        </div>
+                                    </div>
+                                </section>
+    
+                                <section>
+                                    <h2>Account Details</h2>
+                                    <div class="field">
+                                        <label>Username</label>
+                                        <div class="value-container">
+                                            <span></span>
+                                            <button class="edits-btn">Edit</button>
+                                        </div>
+                                    </div>
+                                </section>
+    
+                                <section>
+                                    <h2>Security</h2>
+                                    <div class="field">
+                                        <label>Password</label>
+                                        <div class="value-container">
+                                            <span></span>
+                                            <button class="edits-btn">Edit</button>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+    
+                            <button class="save-btn">Save All Changes</button>
+                        </div>
+                    
+                    </div> 
+              </div>     
+            </header>
+            <div class="wrapper">
+                <div class="recent-deliveries">
+                    <h3 style="color: black;" >REQUESTS</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Request ID</th>
+                                <th>Date Requested</th>
+                                <th>Item Name</th>
+                                <th>Quantity</th>
+                                <th>Current Stock</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><span ></span></td>
+                                <td><button onclick="openRequestInfoModal()">View Details</button></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Request Information Modal -->
+    <div id="requestInfoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">REQUEST INFORMATION</h2>
+                <span class="close" onclick="closeRequestInfoModal()">&times;</span>
+            </div>
+            <div class="modal-section">
+                <h3 style="color: black;">REQUESTOR INFORMATION</h3>
+                <div class="details-grid">
+                    <div class="details-group">
+                        <label >Requestor's Name:</label>
+                        <span id="requestorName"></span>
+                    </div>
+                    <div class="details-group">
+                        <label>Email Address:</label>
+                        <span id="email"></span>
+                    </div>
+                    <div class="details-group">
+                        <label>Phone Number:</label>
+                        <span id="phone"></span>
+                    </div>
+                    <div class="details-group">
+                        <label>Date:</label>
+                        <span id="date"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-section">
+                <h3 style="color: black;">ITEM DETAILS</h3>
+                <div class="item-details-grid">
+                    <div>
+                        <label>Item Name:</label>
+                        <span id="itemName"></span>
+                    </div>
+                    <div>
+                        <label>Qty:</label>
+                        <span id="qty"></span>
+                    </div>
+                    <div>
+                        <label>Unit:</label>
+                        <span id="unit"></span>
+                    </div>
+                </div>
+            </div>
+            <button class="check-stock-btn">Check Stock</button>
+        </div>
+    </div>
+
+   <!-- Stock Available Modal -->
+<div id="stockAvailableModal" class="stock_modal">
+    <div class="stock_modal-content">
+        <div class="stock_modal-header">
+            <h2 class="stock_modal-title">Stock Available</h2>
+            <span class="stock_close" onclick="closeStockAvailableModal()">&times;</span>
+        </div>
+        <p class="stock_modal-message">
+            The requested item is available. Ready to fulfill the request.
+        </p>
+
+        <div class="stock_details-group">
+            <label>Item Name:</label>
+            <span id="stockItemName"></span>
+        </div>
+
+        <div class="stock_details-group">
+            <label>Requested Quantity:</label>
+            <span id="stockQty"></span>
+        </div>
+
+        <div class="stock_details-group">
+            <label>Current Stock:</label>
+            <span id="stockAmount"></span>
+        </div>
+
+        <button class="stock_fulfill-btn">Fulfill Request</button>
+    </div>
+</div>
+
+<!-- Item Unavailable Modal -->
+<div id="stockUnavailableModal" class="stock_unavailable">
+    <div class="stock_modal-content">
+        <div class="stock_modal-header">
+            <h2 class="stock_modal-title">Item Unavailable</h2>
+            <span class="stock_close" onclick="closeStockUnavailableModal()">&times;</span>
+        </div>
+        <p class="stock_modal-message">
+            The requested item is unavailable. The request will be 
+            forwarded for approval.
+        </p>
+
+        <div class="stock_details-group">
+            <label>Item Name:</label>
+            <span id="stockUnavailableItemName"></span>
+        </div>
+
+        <div class="stock_details-group">
+            <label>Requested Quantity:</label>
+            <span id="stockUnavailableQty"></span>
+        </div>
+
+        <div class="stock_details-group">
+            <label>Current Stock:</label>
+            <span id="stockUnavailableAmount"></span>
+        </div>
+
+        <button class="stock_fulfill-btn">Forward for Approval</button>
+    </div>
+</div>
+            </div>
+        </main>
+    </div>
+    <script>
+    // Sample data (can be dynamically fetched or set based on actual data)
+    const requestedQty = 10;
+    const currentStock = 0;
+
+    // Function to open the Request Information Modal
+    function openRequestInfoModal() {
+        document.getElementById("requestInfoModal").style.display = "block";
+    }
+
+    // Function to close the Request Information Modal
+    function closeRequestInfoModal() {
+        document.getElementById("requestInfoModal").style.display = "none";
+    }
+
+    // Function to open the Stock Available Modal
+    function openStockAvailableModal() {
+        document.getElementById("stockAvailableModal").style.display = "block";
+    }
+
+    // Function to close the Stock Available Modal
+    function closeStockAvailableModal() {
+        document.getElementById("stockAvailableModal").style.display = "none";
+    }
+
+    // Function to open the Item Unavailable Modal
+    function openStockUnavailableModal() {
+        document.getElementById("stockUnavailableModal").style.display = "block";
+    }
+
+    // Function to close the Item Unavailable Modal
+    function closeStockUnavailableModal() {
+        document.getElementById("stockUnavailableModal").style.display = "none";
+    }
+
+    // Function to check the stock availability
+    function checkStockAvailability() {
+        closeRequestInfoModal(); // Hide Request Info Modal
+
+        // Compare requested quantity and current stock
+        if (requestedQty <= currentStock) {
+            openStockAvailableModal(); // Show Stock Available Modal
+        } else {
+            openStockUnavailableModal(); // Show Item Unavailable Modal
+        }
+    }
+
+    // Add event listener to the "Check Stock" button inside the Request Information Modal
+    document.querySelector(".check-stock-btn").addEventListener("click", checkStockAvailability);
+            // Get the current page URL path
+    const currentPath = window.location.pathname.split("/").pop();
+
+    // Select all nav items
+    const navLinks = document.querySelectorAll(".nav-item");
+
+    // Loop through each nav link
+    navLinks.forEach((link) => {
+        // Check if the href matches the current path
+        if (link.getAttribute("href") === currentPath) {
+            // Add the 'active' class
+            link.classList.add("active");
+        }
+    });
+
+        function toggleModal() {
+            var modal = document.getElementById('notificationModal');
+            modal.style.display = modal.style.display === "block" ? "none" : "block";
+        }
+        
+        function clearNotifications() {
+            const notificationList = document.querySelector('.notifications-list');
+            notificationList.innerHTML = '<li>No new notifications</li>';
+        }
+  
+    //LOGOUT
+    document.addEventListener('DOMContentLoaded', () => {
+        const logoutLink = document.querySelector('.logout');
+        const logoutModal = document.getElementById('logoutModal');
+        const confirmLogout = document.getElementById('confirmLogout');
+        const cancelLogout = document.getElementById('cancelLogout');
+
+        logoutLink.addEventListener('click', (e) => {
+            e.preventDefault(); 
+            logoutModal.style.display = 'flex';
+        });
+
+        confirmLogout.addEventListener('click', () => {
+            window.location.href = 'http://127.0.0.1:8080/LOGIN/login.html'; 
+        });
+
+        cancelLogout.addEventListener('click', () => {
+            hideLogoutModal();
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === logoutModal) {
+                hideLogoutModal();
+            }
+        });
+
+        function hideLogoutModal() {
+            logoutModal.style.display = 'none';
+        }
+    });
+
+     // Update profile picture
+     function toggleUserModal() {
+                    const modal = document.querySelector('#ProfileModal');
+                    modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
+                }
+
+            function updateProfilePic(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('profileImage').src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            // Close modal when clicking outside
+            window.onclick = function(event) {
+                const modal = document.getElementById('ProfileModal');
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            }
+
+            // Handle edit buttons
+            document.querySelectorAll('.edit-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const container = this.parentElement;
+                    const span = container.querySelector('span');
+                    const currentValue = span.textContent;
+
+                    if (!container.querySelector('.edit-input')) {
+                        // Create input
+                        const input = document.createElement('input');
+                        input.type = span.textContent.includes('•') ? 'password' : 'text';
+                        input.className = 'edit-input';
+                        input.value = span.textContent.includes('•') ? '' : currentValue;
+                        
+                        // Hide span and insert input
+                        span.style.display = 'none';
+                        container.insertBefore(input, this);
+                        
+                        // Change edit to save
+                        this.textContent = 'Save';
+                        
+                        input.focus();
+                    } else {
+                        // Save changes
+                        const input = container.querySelector('.edit-input');
+                        const newValue = input.value;
+                        
+                        // Update span and show it
+                        span.textContent = input.type === 'password' && newValue ? '••••••••' : (newValue || span.textContent);
+                        span.style.display = 'inline';
+                        
+                        // Remove input
+                        input.remove();
+                        
+                        // Change save back to edit
+                        this.textContent = 'Edit';
+                    }
+                });
+            });
+
+            // Save all changes
+            document.querySelector('.save-btn').addEventListener('click', function() {
+                const data = {
+                    profileImage: document.getElementById('profileImage').src,
+                    name: document.querySelector('div.field:nth-child(1) span').textContent,
+                    email: document.querySelector('div.field:nth-child(2) span').textContent,
+                    username: document.querySelector('section:nth-child(2) span').textContent
+                };
+                
+                console.log('Saving:', data);
+                alert('Changes saved successfully!');
+            });
+
+            // Close with Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    document.getElementById('ProfileModal').style.display = 'none';
+                }
+            });
+    </script>
+</body>
+</html>
